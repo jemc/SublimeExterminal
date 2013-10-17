@@ -10,7 +10,7 @@ class Exterminal:
     def wrapped_exec(self, *args, **kwargs):
         settings = sublime.load_settings("SublimeExterminal.sublime-settings")
         
-        if settings.get('enabled'):
+        if settings.get('enabled') and kwargs.get('use_exterminal', True):
             wrapper = settings.get('exec_wrapper')
             
             shell_cmd = kwargs.get('shell_cmd')
