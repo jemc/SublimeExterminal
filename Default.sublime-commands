@@ -1,0 +1,6 @@
+[
+  {
+    "caption": "SublimeExterminal: Start an External Terminal",
+    "command": "start_exterminal"
+  }
+]
