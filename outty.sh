@@ -18,10 +18,6 @@ echo
 while true
 do
     if read line < $pipe; then
-        if [[ "$line" == 'quit' ]]; then
-            break
-        fi
-        
         echo Running command:
         echo $line
         echo
