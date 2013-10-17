@@ -24,7 +24,7 @@ echo Now accepting commands...
 echo
 
 # Read lines from the pipe in an infinite loop until closed
-while true do
+while true; do
     if read line < $pipe; then
         echo Running command:
         echo $line
