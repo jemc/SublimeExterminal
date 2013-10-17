@@ -8,12 +8,15 @@ def plugin_loaded():
 class Exterminal:
     
     def wrapped_exec(self, *args, **kwargs):
+        settings = sublime.load_settings("SublimeExterminal.sublime-settings")
         
-        shell_cmd = kwargs.get('shell_cmd')
-        shell_cmd = "echo \"%s\" > /tmp/sublime_exterminal_pipe" % \
-            shell_cmd.replace('"','\\"')
-        
-        kwargs['shell_cmd'] = shell_cmd
+        if settings.get('enabled'):
+            wrapper = settings.get('exec_wrapper')
+            
+            shell_cmd = kwargs.get('shell_cmd')
+            shell_cmd = wrapper % shell_cmd.replace('"','\\"')
+            
+            kwargs['shell_cmd'] = shell_cmd
         
         return self.run_cached_by_exterminal(self, *args, **kwargs)
     

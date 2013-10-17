@@ -1,0 +1,4 @@
+{
+  "enabled": true,
+  "exec_wrapper": "echo \"%s\" > /tmp/sublime_exterminal_pipe"
+}
