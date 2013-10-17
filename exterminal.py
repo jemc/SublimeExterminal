@@ -10,7 +10,9 @@ class Exterminal:
     def wrapped_exec(self, *args, **kwargs):
         
         shell_cmd = kwargs.get('shell_cmd')
-        shell_cmd = "echo \"%s\" > /tmp/sublpipe" % shell_cmd.replace('"','\\"')
+        shell_cmd = "echo \"%s\" > /tmp/sublime_exterminal_pipe" % \
+            shell_cmd.replace('"','\\"')
+        
         kwargs['shell_cmd'] = shell_cmd
         
         return self.run_cached_by_exterminal(self, *args, **kwargs)

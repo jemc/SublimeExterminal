@@ -2,25 +2,34 @@
 
 pipe=$1
 
+# If no pipe was specifed, use the default value
 if [[ ! -n "$pipe" ]]; then
-    pipe=/tmp/sublpipe
+    pipe=/tmp/sublime_exterminal_pipe
 fi
 
-if [[ -a $pipe ]] && [[ ! -p $pipe ]]; then
-    rm -f $pipe
+# If the pipe doesn't exist, create it
+if [[ ! -a $pipe ]]; then
+    mkfifo $pipe
+else
+    # If something is in the way of the pipe, 
+    # delete it, then create the pipe
+    if [[ ! -p $pipe ]]; then
+        rm -f $pipe
+        mkfifo $pipe
+    fi
 fi
-mkfifo $pipe
 
 echo
 echo Now accepting commands...
 echo
 
-while true
-do
+# Read lines from the pipe in an infinite loop until closed
+while true do
     if read line < $pipe; then
         echo Running command:
         echo $line
         echo
+        
         bash -c "$line"
         
         echo
