@@ -6,11 +6,10 @@ if [[ ! -n "$pipe" ]]; then
     pipe=/tmp/sublpipe
 fi
 
-trap "rm -f $pipe" EXIT
-
-if [[ ! -p $pipe ]]; then
-    mkfifo $pipe
+if [[ -a $pipe ]] && [[ ! -p $pipe ]]; then
+    rm -f $pipe
 fi
+mkfifo $pipe
 
 echo
 echo Now accepting commands...
@@ -18,7 +17,7 @@ echo
 
 while true
 do
-    if read line <$pipe; then
+    if read line < $pipe; then
         if [[ "$line" == 'quit' ]]; then
             break
         fi
@@ -27,10 +26,11 @@ do
         echo $line
         echo
         bash -c "$line"
+        
         echo
         echo Awaiting another command...
-        
+        echo
     fi
 done
 
-echo "Reader exiting"
+echo Reader exiting...
