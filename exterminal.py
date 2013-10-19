@@ -9,16 +9,13 @@ def wrapped_exec(self, *args, **kwargs):
     if settings.get('enabled') and kwargs.get('use_exterminal', True):
         wrapper = settings.get('exec_wrapper')
         
-        try:
-            shell_cmd = kwargs.get('shell_cmd')
-            shell_cmd = wrapper % shell_cmd.replace('"','\\"')
-            kwargs['shell_cmd'] = shell_cmd
+        try: kwargs['shell_cmd'] = ' '.join(kwargs['cmd']).replace('"','\\"')
         except KeyError: pass
         
-        try:
-            cmd = ' '.join(kwargs.get('cmd'))
-            kwargs['shell_cmd'] = wrapper % cmd.replace('"','\\"')
+        try: kwargs['shell_cmd'] = kwargs['shell_cmd'].replace('"','\\"')
         except KeyError: pass
+        
+        kwargs['shell_cmd'] = wrapper.format(**kwargs)
     
     return self.run_cached_by_exterminal(*args, **kwargs)
 
