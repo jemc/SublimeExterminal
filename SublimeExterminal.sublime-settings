@@ -2,7 +2,7 @@
   "enabled": true,
   
   "exec_wrapper": 
-    "echo \"{shell_cmd}\" > /tmp/sublime_exterminal_pipe",
+    "echo \"cd {working_dir}; {shell_cmd}\" > /tmp/sublime_exterminal_pipe",
     
   "start_exterminal": 
     "xterm -e ./recv.sh /tmp/sublime_exterminal_pipe",

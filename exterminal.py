@@ -9,6 +9,10 @@ def wrapped_exec(self, *args, **kwargs):
     if settings.get('enabled') and kwargs.get('use_exterminal', True):
         wrapper = settings.get('exec_wrapper')
         
+        if self.window.active_view() and self.window.active_view().file_name():
+            filepath = os.path.dirname(self.window.active_view().file_name())
+            kwargs.setdefault('working_dir', filepath)
+        
         try: kwargs['shell_cmd'] = ' '.join(kwargs['cmd']).replace('"','\\"')
         except KeyError: pass
         
