@@ -19,7 +19,8 @@ def wrapped_exec(self, *args, **kwargs):
         try: kwargs['shell_cmd'] = kwargs['shell_cmd'].replace('"','\\"')
         except KeyError: pass
         
-        kwargs['shell_cmd'] = wrapper.format(**kwargs)
+        try: kwargs['shell_cmd'] = kwargs['shell_cmd'] = wrapper.format(**kwargs)
+        except KeyError: pass
     
     return self.run_cached_by_exterminal(*args, **kwargs)
 
