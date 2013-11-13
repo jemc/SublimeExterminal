@@ -3,7 +3,10 @@
   
   "exec_wrapper": 
     "echo \"cd {working_dir}; {shell_cmd}\" > /tmp/sublime_exterminal_pipe",
-    
+  
+  "kill_command":
+    "killall recv.sh",
+  
   "start_exterminal": 
     "xterm -e ./recv.sh /tmp/sublime_exterminal_pipe",
 }

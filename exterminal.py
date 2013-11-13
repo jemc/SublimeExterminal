@@ -21,6 +21,13 @@ def wrapped_exec(self, *args, **kwargs):
         
         try: kwargs['shell_cmd'] = kwargs['shell_cmd'] = wrapper.format(**kwargs)
         except KeyError: pass
+        
+        try: 
+            if kwargs['kill']: 
+                kwargs['shell_cmd'] = settings.get('kill_command')
+                kwargs['kill'] = False
+        except KeyError: pass
+        
     
     return self.run_cached_by_exterminal(*args, **kwargs)
 
